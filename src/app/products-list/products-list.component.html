@@ -1,3 +1,82 @@
-<p>
-  products-list works!
-</p>
+<div *ngIf="isProductBought">
+  <ngb-alert type="success" (close)="closeAlert()">
+    <strong>Success!</strong> You have successfully added this product to your pot!.
+  </ngb-alert>
+</div>
+
+<div>
+  <h1 id="products">Products</h1>
+  <div class="pull-right">
+    <button class="btn btn-success" (click)="open(finalBuy, 'final-modal-basic-title')">Count - {{count}}</button>
+  </div>
+  <div class="products-list-container">
+    <div class="card" *ngFor="let product of products" style="width: 18rem;">
+      <img class="card-img-top" src="../../assets/images/{{product.image}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{product.title}}</h5>
+        <p class="card-text">{{product.description}}</p>
+        <button class="btn btn-info" (click)="open(content, 'modal-basic-title', product)">Info</button>
+        <button class="btn btn-primary" (click)="buyProduct(product)">${{product.price}} - Buy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Product Info</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <img class="card-image" src="../../assets/images/{{currentProduct.image}}">
+    <div class="card-body">
+      <h5 class="card-title">{{currentProduct.title}}</h5>
+      <p class="card-text">{{currentProduct.description}}</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+    <button class="btn btn-primary" (click)="buyProduct(currentProduct)">${{currentProduct.price}} - Buy</button>
+  </div>
+</ng-template>
+
+<ng-template #finalBuy let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="final-modal-basic-title">Final Pot</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table id="purchases">
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </tr>
+      <tr *ngFor="let product of selectedProductsList">
+        <td>{{product.title}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.quantity}}</td>
+      </tr>
+    </table>
+    <h2>Total: {{totalPrice | currency}}</h2>
+    <form>
+      <h5>Fill in the form to buy these products:</h5>
+      <div class="form-group row">
+        <label for="client-name" class="col-4 col-form-label">Your name:</label>
+        <input class="form-control col-6" type="text" id="client-name" required>
+      </div>
+      <div class="form-group row">
+        <label for="client-email" class="col-4 col-form-label">Your email:</label>
+        <input class="form-control col-6" type="email" id="client-email" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Order</button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
