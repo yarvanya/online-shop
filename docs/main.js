@@ -418,7 +418,7 @@ var ProductsListComponent = /** @class */ (function () {
         });
     };
     ProductsListComponent.prototype.getProducts = function () {
-        return this.http.get('../../assets/products.json');
+        return this.http.get('./../../assets/products.json');
     };
     ProductsListComponent.prototype.buyProduct = function (product) {
         var _this = this;
