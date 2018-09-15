@@ -40,7 +40,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   getProducts(): Observable<ProductInterface> {
-    return this.http.get<ProductInterface>('./../../assets/products.json');
+    return this.http.get<ProductInterface>('docc/assets/products.json');
   }
 
   buyProduct(product) {
